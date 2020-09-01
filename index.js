@@ -6,9 +6,10 @@ const port = 5000
 const server = express()
 server.listen(port, () => console.log('server is runing...'))
 server.use(express.json())
-server.use(cors({
-    origin: '*'
-}))
+// server.use(cors({
+//     origin: '*',
+//     methods: 'GET,PUT,POST'
+// }))
 
 let users = [
     {id:1, name:'Sam1', bio:'I am 1 Good'},
@@ -29,9 +30,8 @@ server.get('/api/users', (req, res) => {
 
 server.get('/api/users/:id', (req, res) => {
     const id = Number(req.params.id)
-    res.status(200).json(
-        users.find(user => user.id === id)
-    )
+    if (users.find(user => user.id===id)) { res.status(200).json(users.find((user) => user.id === id)) }
+    else {res.status(404).json({ message: "wrong user id" })}
 })
 
 server.post('/api/users', (req, res) => {
@@ -50,8 +50,6 @@ server.delete('/api/users/:id', (req, res) => {
     } else {
         res.status(404).json({message: 'wrong user id'})
     }
-    
-    
 })
 
 server.put('/api/users/:id', (req, res) => {
