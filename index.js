@@ -41,8 +41,14 @@ server.post('/api/users', (req, res) => {
 
 server.delete('/api/users/:id', (req, res) => {
     const id = Number(req.params.id)
-    users = users.filter(user => user.id !== id)
-    res.status(200).json(users)
+    if (users.find(user => user.id === id)) {
+    users = users.filter((user) => user.id !== id)
+        res.status(200).json(users)
+    } else {
+        res.status(404).json({message: 'wrong user id'})
+    }
+    
+    
 })
 
 server.put('/api/users/:id', (req, res) => {
