@@ -6,7 +6,7 @@ const server = express()
 server.listen(port, () => console.log('server is runing...'))
 server.use(express.json())
 
-const users = [
+let users = [
     {id:1, name:'Sam1', bio:'I am 1 Good'},
     {id:2, name:'Sam2', bio:'I am 2 Good'},
     {id:3, name:'Sam3', bio:'I am 3 Good'},
@@ -36,5 +36,11 @@ server.post('/api/users', (req, res) => {
     //console.log(req.body)
     users.push(newUser)
     res.status(201).json({data: users})
+})
+
+server.delete('/api/users/:id', (req, res) => {
+    const id = Number(req.params.id)
+    users = users.filter(user => user.id !== id)
+    res.status(200).json(users)
 })
 
