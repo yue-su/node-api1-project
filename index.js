@@ -44,3 +44,16 @@ server.delete('/api/users/:id', (req, res) => {
     res.status(200).json(users)
 })
 
+server.put('/api/users/:id', (req, res) => {
+    const id = Number(req.params.id)
+    const changes = req.body
+    
+    let updatedUser = users.find(user => user.id === id)
+    if (updatedUser) {
+        Object.assign(updatedUser, changes)
+        res.status(200).json(updatedUser)
+    } else {
+        res.status(404).json({message:'not found'})
+    }
+})
+
