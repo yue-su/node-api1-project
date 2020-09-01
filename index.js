@@ -6,7 +6,10 @@ const port = 5000
 const server = express()
 server.listen(port, () => console.log('server is runing...'))
 server.use(express.json())
-server.use(cors())
+server.use(cors({
+    origin: '*'
+}))
+
 let users = [
     {id:1, name:'Sam1', bio:'I am 1 Good'},
     {id:2, name:'Sam2', bio:'I am 2 Good'},
